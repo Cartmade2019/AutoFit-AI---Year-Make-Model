@@ -637,7 +637,7 @@ const FitmentWidget: React.FC = () => {
             }}
           >
             {config.appearance.show_icons && (
-              <span>
+              <span style={{display: 'flex'}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -654,7 +654,7 @@ const FitmentWidget: React.FC = () => {
                 </svg>
               </span>
             )}
-            {config.translations.submit_button_text}
+            {config.translations.submit_button_text}         
           </button>
         )}
         {config.appearance.clear_button.show && (
@@ -670,7 +670,7 @@ const FitmentWidget: React.FC = () => {
             }}
           >
             {config.appearance.show_icons && (
-              <span>
+              <span style={{display: "flex"}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
