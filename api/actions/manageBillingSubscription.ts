@@ -221,7 +221,7 @@ async function createSubscription({
   const variables = {
     name: pricing.name,
     lineItems,
-    // test: process.env.NODE_ENV !== "production",
+    test: process.env.NODE_ENV !== "production",
     trialDays,
     returnUrl,
   };

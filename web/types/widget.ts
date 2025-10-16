@@ -127,7 +127,7 @@ export interface ButtonConfig {
 }
 
 // ===== Fitment Widget Types =====
-export type LayoutHV = 'horizontal' | 'vertical';
+export type LayoutHV = 'horizontal' | 'vertical' | 'flex' ;
 
 export interface FitmentWidgetAppearance {
   title: string;
@@ -140,6 +140,7 @@ export interface FitmentWidgetAppearance {
   show_title: boolean;
   clear_button: ButtonConfig;
   show_subtitle: boolean;
+  submit_button_position: 'left' | 'right';
   submit_button: ButtonConfig;
 }
 

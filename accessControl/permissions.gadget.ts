@@ -196,9 +196,7 @@ export const permissions: GadgetPermissions = {
       actions: {
         bulkRemoveProductTags: true,
         bulkUpdateProductTags: true,
-        bulkuploadtag: true,
         checkAppEmbed: true,
-        eventlog: true,
         fileImport: true,
         getActiveSubscription: true,
         getThemeStatus: true,
