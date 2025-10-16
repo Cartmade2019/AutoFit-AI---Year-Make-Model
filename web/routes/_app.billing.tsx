@@ -22,6 +22,7 @@ import { CheckIcon } from "@shopify/polaris-icons";
 import { useRouteLoaderData, useNavigate } from "@remix-run/react";
 import type { loader as rootLoader } from "~/root";
 import { api } from "../api";
+import { supabase } from "../supabase/supabaseClient";
 
 // ---------- Helpers ----------
 function formatCurrency(n: unknown) {
@@ -626,6 +627,9 @@ export default function BillingPage() {
       });
       if (result?.confirmationUrl) {
         // Keep spinner visible; redirect immediately
+
+
+      
         window.top.location.href = result.confirmationUrl;
         return; // do not clear managingPlan; page will navigate
       }

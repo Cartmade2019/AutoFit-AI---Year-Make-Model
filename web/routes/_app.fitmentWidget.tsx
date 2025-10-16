@@ -20,7 +20,7 @@ import {
   SkeletonDisplayText,
 } from '@shopify/polaris';
 import { getWidgetSettings, saveWidgetSettings } from '../lib/widgetSettings';
-import type { FitmentWidgetConfig } from '../types/widgets';
+import type { FitmentWidgetConfig } from '../types/widget';
 import ColorSwatch from '../components/ColorSwatch';
 
 /* -------------------- Tab Components -------------------- */
@@ -32,10 +32,10 @@ import ColorSwatch from '../components/ColorSwatch';
  * By being a separate component, it can manage its own state without violating the Rules of Hooks.
  */
 const AppearanceTab: React.FC<{ config: FitmentWidgetConfig; updateConfig: (path: string, value: any) => void }> = ({ config, updateConfig }) => {
-  const [title, setTitle] = useState(config.appearance.title);
-  const [subtitle, setSubtitle] = useState(config.appearance.subtitle);
-  const [titleAlignment, setTitleAlignment] = useState(config.appearance.title_alignment);
-  const [subtitleAlignment, setSubtitleAlignment] = useState(config.appearance.subtitle_alignment);
+  const [title, setTitle] = useState<string>(config.appearance.title);
+  const [subtitle, setSubtitle] = useState<string>(config.appearance.subtitle);
+  const [titleAlignment, setTitleAlignment] = useState<string>(config.appearance.title_alignment);
+  const [subtitleAlignment, setSubtitleAlignment] = useState<string>(config.appearance.subtitle_alignment);
 
   // Effect to sync local state when the main config object changes from parent
   useEffect(() => {
@@ -61,6 +61,7 @@ const AppearanceTab: React.FC<{ config: FitmentWidgetConfig; updateConfig: (path
             }}
             autoComplete="off"
           />
+          <FormLayout.Group condensed>
           <TextField
             label="Subtitle"
             value={subtitle}
@@ -70,12 +71,23 @@ const AppearanceTab: React.FC<{ config: FitmentWidgetConfig; updateConfig: (path
             }}
             autoComplete="off"
           />
+             <Select
+              label="Submit Button Position"
+              options={[
+                { label: 'Left', value: 'left' },
+                { label: 'Right', value: 'right' },
+              ]}
+              value={config.appearance.submit_button_position}
+              onChange={(value) => updateConfig('appearance.submit_button_position', value)}
+            />
+          </FormLayout.Group>
           <FormLayout.Group condensed>
             <Select
               label="Layout"
               options={[
                 { label: 'Horizontal', value: 'horizontal' },
                 { label: 'Vertical', value: 'vertical' },
+                {label: 'Flex' , value: 'flex'}
               ]}
               value={config.appearance.layout}
               onChange={(value) => updateConfig('appearance.layout', value)}
@@ -375,6 +387,7 @@ const FitmentWidget: React.FC = () => {
       clear_button: { icon: "close", show: true, label: "Reset" },
       show_subtitle: true,
       submit_button: { icon: "search", show: true, label: "Find Parts" },
+      submit_button_position: "left",
       title_alignment: "center",
       subtitle_alignment: "center",
     },
@@ -433,7 +446,7 @@ const FitmentWidget: React.FC = () => {
   const updateConfig = useCallback((path: string, value: any) => {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = window.setTimeout(() => {
-      setConfig((prevConfig) => {
+      setConfig((prevConfig: FitmentWidgetConfig | null) => {
         if (!prevConfig) return null;
         const pathArray = path.split('.');
         const newConfig: any = JSON.parse(JSON.stringify(prevConfig));
@@ -498,6 +511,7 @@ const FitmentWidget: React.FC = () => {
   /* -------------------- Render Helpers -------------------- */
   const renderPreview = () => {
     const isHorizontal = config.appearance.layout === 'horizontal';
+    const isFlex = config.appearance.layout === 'flex';
     const showAllFields = config.options.display_all_fitment_fields;
     const firstViewCount = config.options.first_view;
 
@@ -521,7 +535,7 @@ const FitmentWidget: React.FC = () => {
     };
 
     const buttonStyleBase: React.CSSProperties = {
-      padding: '0 12px',
+      padding: isFlex ? '0 8px' : '0 12px',
       height: '34px',
       border: 'none',
       borderRadius: '6px',
@@ -531,6 +545,7 @@ const FitmentWidget: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       gap: '4px',
+      whiteSpace: 'nowrap'
     };
 
     // Layout-specific styles
@@ -541,7 +556,12 @@ const FitmentWidget: React.FC = () => {
           alignItems: 'center',
           gap: '8px',
         }
-      : {
+      : isFlex ? {
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '8px',
+      } :  {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
@@ -549,12 +569,18 @@ const FitmentWidget: React.FC = () => {
           width: '100%',
         };
 
+    // const selectContainerStyle: React.CSSProperties = isHorizontal
+    //   ? 
+    //   : { width: '100%' };
+
     const selectContainerStyle: React.CSSProperties = isHorizontal
-      ? { flex: '1 1 120px', minWidth: 0 }
-      : { width: '100%' };
+  ? { flex: '1 1 120px', minWidth: 0 }
+  : isFlex
+  ? { minWidth: 0 }
+  : { width: '100%' };
 
     const buttonsRowStyle: React.CSSProperties = isHorizontal
-      ? { display: 'flex', alignItems: 'center', gap: '8px' }
+      ? { display: 'flex', alignItems: 'center', gap: '8px' } : isFlex ? { display: 'flex', alignItems: 'center', gap: '8px' } 
       : {
           display: 'flex',
           gap: '8px',
@@ -594,42 +620,151 @@ const FitmentWidget: React.FC = () => {
     const showSubmit =
       config.appearance.submit_button.show && !(config.options.auto_submit && config.options.hide_submit_button);
 
-    const buttons = (
+   const buttons = (
+  <>
+    {config.appearance.submit_button_position === "left" ? (
+      <>
+        {showSubmit && (
+          <button
+            style={{
+              ...buttonStyleBase,
+              backgroundColor:
+                config.appearance.colors.primary_button_color,
+              color:
+                config.appearance.colors.primary_button_text_color,
+              flex: verticalButtonFlex,
+              width: isHorizontal ? "auto" : undefined,
+            }}
+          >
+            {config.appearance.show_icons && (
+              <span style={{display: 'flex'}}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M21 21l-6 -6" />
+                </svg>
+              </span>
+            )}
+            {config.translations.submit_button_text}         
+          </button>
+        )}
+        {config.appearance.clear_button.show && (
+          <button
+            style={{
+              ...buttonStyleBase,
+              backgroundColor:
+                config.appearance.colors.secondary_button_color,
+              color:
+                config.appearance.colors.secondary_button_text_color,
+              flex: verticalButtonFlex,
+              width: isHorizontal ? "auto" : undefined,
+            }}
+          >
+            {config.appearance.show_icons && (
+              <span style={{display: "flex"}}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
+              </span>
+            )}
+            {config.translations.clear_button_text}
+          </button>
+        )}
+      </>
+    ) : (
       <>
         {config.appearance.clear_button.show && (
           <button
             style={{
               ...buttonStyleBase,
-              backgroundColor: config.appearance.colors.secondary_button_color,
-              color: config.appearance.colors.secondary_button_text_color,
+              backgroundColor:
+                config.appearance.colors.secondary_button_color,
+              color:
+                config.appearance.colors.secondary_button_text_color,
               flex: verticalButtonFlex,
-              width: isHorizontal ? 'auto' : undefined,
+              width: isHorizontal ? "auto" : undefined,
             }}
           >
-            {config.appearance.show_icons && <span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" > <path d="M18 6l-12 12" /> <path d="M6 6l12 12" /> </svg>
-            </span>}
+            {config.appearance.show_icons && (
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
+              </span>
+            )}
             {config.translations.clear_button_text}
           </button>
         )}
+
         {showSubmit && (
           <button
             style={{
               ...buttonStyleBase,
-              backgroundColor: config.appearance.colors.primary_button_color,
-              color: config.appearance.colors.primary_button_text_color,
+              backgroundColor:
+                config.appearance.colors.primary_button_color,
+              color:
+                config.appearance.colors.primary_button_text_color,
               flex: verticalButtonFlex,
-              width: isHorizontal ? 'auto' : undefined,
+              width: isHorizontal ? "auto" : undefined,
             }}
           >
-            {config.appearance.show_icons && <span>
-           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /> <path d="M21 21l-6 -6" /> </svg>
-            </span>}
+            {config.appearance.show_icons && (
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="0.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M21 21l-6 -6" />
+                </svg>
+              </span>
+            )}
             {config.translations.submit_button_text}
           </button>
         )}
       </>
-    );
+    )}
+  </>
+);
+
 
     return (
       <Card>
@@ -648,6 +783,8 @@ const FitmentWidget: React.FC = () => {
 
           <div style={{ padding: '12px', backgroundColor: '#f9fafb', width: '100%' }}>
             <div style={shellStyle}>
+              <div style={isFlex ? {display: 'flex' , flex: 1 ,  flexWrap: "nowrap" , justifyContent: "space-evenly"} : {}}>
+              <div>
               {config.appearance.show_title && (
                 <h2
                   style={{
@@ -674,12 +811,12 @@ const FitmentWidget: React.FC = () => {
                   {config.appearance.subtitle}
                 </p>
               )}
-
+           </div> 
               <div style={fieldsWrapStyle}>
                 {selects}
                 <div style={buttonsRowStyle}>{buttons}</div>
               </div>
-
+            </div>
               {/* Progressive display info message */}
               {!showAllFields && fieldsToShow.length < allFitmentFields.length && (
                 <div style={{ 
