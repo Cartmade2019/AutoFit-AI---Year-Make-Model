@@ -1,0 +1,62 @@
+{
+  "dashboard" : {
+     "title": "Dashboard",
+     "description": "Manage Your AutoFit AI Features and Widgets",
+     "setup": {
+       "title": "Setup Guide",
+       "badge": "Completed",
+       "info": "Follow this setup guide to activate and configure the Fitment widgets.",
+       "recheck": "Recheck",
+       "setup1": "Activate Your App",
+       "setup1desc": "To Start Using AI-YMM APP, first activate in your Shopify Admin. Activation is required for all the features. Go to theme customization and under the app embeded toggle the AI-YMM APP to activate.",
+       "setup1cta": "Go To Theme Customization",
+       "setup2": "Activate Your Widgets",
+       "setup2desc": "Turn on all required widgets in the app settings.",
+       "setup2cta": "Activate Your Widgets",
+       "setup3": "Fill your database",
+       "setup3desc": "Add your store's data to complete the setup and get the app fully functional.",
+       "setup3cta": "Go to Database"
+     },
+    "widgetsCard": {
+        "cta1": "Settings",
+        "cta2": "Turn On",
+        "card1": {
+           "title": "Chatbot with AI Assistant",
+           "description": "Instantly find the right auto parts with our AI assistant. Chat-powered, smart, and always ready to help get accurate recommendations, fast!",
+           "on": "on",
+           "off": "off"
+        },
+       "card2": {
+           "title": "Fitment Widget",
+           "description": "Easily find parts that fit your vehicle with our Year, Make, Model dropdown filter — precise, fast, and user-friendly.",
+           "on": "on",
+           "off": "off"
+        },
+       "card3": {
+           "title": "Verify Fitment Widget",
+           "description": "Quickly verify if a part fits your selected vehicle — smart, accurate, and always up-to-date.",
+           "on": "on",
+           "off": "off"
+        },
+       "card4": {
+           "title": "Fitment Table",
+           "description": "View detailed compatibility info by Year, Make, Model, and more — ensure perfect part fitment at a glance.",
+           "on": "on",
+           "off": "off"
+        }
+    },
+      "support": {
+         "title": "Support and feedback",
+         "description": "Schedule a free onboarding call with our Merchant Support team, or chat with us now, to get set up.",
+         "cta": "Contact Us",
+         "card1": {
+            "title": "Privacy Policy",
+            "description": "Read how we handle your customer data in our privacy policy."
+         },
+         "card2": {
+            "title": "Feature Request",
+            "description": "Send us your ideas to improve the app and add functionality."
+         }
+      }
+  }
+}

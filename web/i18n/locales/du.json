@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Beheer uw AutoFit AI-functies en widgets",
+    "setup": {
+      "title": "Installatiehandleiding",
+      "badge": "Voltooid",
+      "info": "Volg deze installatiehandleiding om de Fitment-widgets te activeren en te configureren.",
+      "recheck": "Opnieuw controleren",
+      "setup1": "Activeer uw app",
+      "setup1desc": "Om AI-YMM APP te gebruiken, activeer deze eerst in uw Shopify-beheer. Activatie is vereist voor alle functies. Ga naar thema-aanpassing en schakel onder de app-invoeging de AI-YMM APP in om te activeren.",
+      "setup1cta": "Ga naar Thema-aanpassing",
+      "setup2": "Activeer uw widgets",
+      "setup2desc": "Schakel alle vereiste widgets in via de app-instellingen.",
+      "setup2cta": "Activeer uw widgets",
+      "setup3": "Vul uw database",
+      "setup3desc": "Voeg de gegevens van uw winkel toe om de installatie te voltooien en de app volledig functioneel te maken.",
+      "setup3cta": "Ga naar Database"
+    },
+    "widgetsCard": {
+      "cta1": "Instellingen",
+      "cta2": "Inschakelen",
+      "card1": {
+        "title": "Chatbot met AI-assistent",
+        "description": "Vind direct de juiste auto-onderdelen met onze AI-assistent. Chatgestuurd, slim en altijd klaar om snel nauwkeurige aanbevelingen te geven!",
+        "on": "aan",
+        "off": "uit"
+      },
+      "card2": {
+        "title": "Fitment-widget",
+        "description": "Vind eenvoudig onderdelen die bij uw voertuig passen met ons Jaar-, Merk-, Model-keuzemenu — precies, snel en gebruiksvriendelijk.",
+        "on": "aan",
+        "off": "uit"
+      },
+      "card3": {
+        "title": "Controleer Fitment-widget",
+        "description": "Controleer snel of een onderdeel past bij uw geselecteerde voertuig — slim, nauwkeurig en altijd up-to-date.",
+        "on": "aan",
+        "off": "uit"
+      },
+      "card4": {
+        "title": "Fitment-tabel",
+        "description": "Bekijk gedetailleerde compatibiliteitsinformatie per Jaar, Merk, Model en meer — zorg voor perfecte pasvorm van onderdelen in één oogopslag.",
+        "on": "aan",
+        "off": "uit"
+      }
+    },
+    "support": {
+      "title": "Ondersteuning en feedback",
+      "description": "Plan een gratis onboarding-gesprek met ons Merchant Support-team, of chat nu met ons, om aan de slag te gaan.",
+      "cta": "Neem contact op",
+      "card1": {
+        "title": "Privacybeleid",
+        "description": "Lees hoe wij omgaan met uw klantgegevens in ons privacybeleid."
+      },
+      "card2": {
+        "title": "Functieaanvraag",
+        "description": "Stuur ons uw ideeën om de app te verbeteren en nieuwe functionaliteiten toe te voegen."
+      }
+    }
+  }
+}
