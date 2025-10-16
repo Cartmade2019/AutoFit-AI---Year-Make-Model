@@ -27,6 +27,7 @@ export const settings: GadgetSettings = {
           "write_products",
           "read_locations",
           "read_themes",
+          "read_products",
         ],
       },
     },
