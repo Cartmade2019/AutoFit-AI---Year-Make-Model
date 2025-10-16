@@ -40,8 +40,7 @@ import CheckBoxIcon from "../components/icons/CheckBoxIcon";
 import ActivateAppIcon from "../components/icons/ActivateAppIcon";
 import ActivateWidgetIcon from "../components/icons/ActivateWidgetIcon";
 import ActivateDatabaseIcon from "../components/icons/ActivateDatabaseIcon";
-import type { GadgetWidgetData } from "../types/widgets";
-import type { DashboardWidget } from "../types/widgets";
+import type { GadgetWidgetData , DashboardWidget } from "../types/widget";
 import {
   getAllWidgetStatuses,
   setWidgetEnabledStatus,
@@ -93,9 +92,9 @@ const SkeletonSetupCard = memo(function SkeletonSetupCard() {
           <InlineStack align="space-between" blockAlign="center">
             <InlineStack gap="100" blockAlign="center">
               <SkeletonDisplayText size="small" />
-              <SkeletonDisplayText size="extraSmall" />
+              <SkeletonDisplayText size="small" />
             </InlineStack>
-            <SkeletonDisplayText size="extraSmall" />
+            <SkeletonDisplayText size="small" />
           </InlineStack>
           <SkeletonBodyText lines={2} />
         </BlockStack>
@@ -113,8 +112,8 @@ const SkeletonSupportCard = memo(function SkeletonSupportCard() {
             <SkeletonDisplayText size="small" />
             <SkeletonBodyText lines={2} />
             <InlineStack gap="200">
-              <SkeletonDisplayText size="extraSmall" />
-              <SkeletonDisplayText size="extraSmall" />
+              <SkeletonDisplayText size="small" />
+              <SkeletonDisplayText size="small" />
             </InlineStack>
           </BlockStack>
           <InlineGrid columns={2} gap="400">

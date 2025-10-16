@@ -20,7 +20,7 @@ import {
   SkeletonDisplayText,
 } from '@shopify/polaris';
 import { getWidgetSettings, saveWidgetSettings } from '../lib/widgetSettings';
-import type { FitmentWidgetConfig } from '../types/widgets';
+import type { FitmentWidgetConfig } from '../types/widget';
 import ColorSwatch from '../components/ColorSwatch';
 
 /* -------------------- Tab Components -------------------- */
@@ -32,10 +32,10 @@ import ColorSwatch from '../components/ColorSwatch';
  * By being a separate component, it can manage its own state without violating the Rules of Hooks.
  */
 const AppearanceTab: React.FC<{ config: FitmentWidgetConfig; updateConfig: (path: string, value: any) => void }> = ({ config, updateConfig }) => {
-  const [title, setTitle] = useState(config.appearance.title);
-  const [subtitle, setSubtitle] = useState(config.appearance.subtitle);
-  const [titleAlignment, setTitleAlignment] = useState(config.appearance.title_alignment);
-  const [subtitleAlignment, setSubtitleAlignment] = useState(config.appearance.subtitle_alignment);
+  const [title, setTitle] = useState<string>(config.appearance.title);
+  const [subtitle, setSubtitle] = useState<string>(config.appearance.subtitle);
+  const [titleAlignment, setTitleAlignment] = useState<string>(config.appearance.title_alignment);
+  const [subtitleAlignment, setSubtitleAlignment] = useState<string>(config.appearance.subtitle_alignment);
 
   // Effect to sync local state when the main config object changes from parent
   useEffect(() => {
@@ -446,7 +446,7 @@ const FitmentWidget: React.FC = () => {
   const updateConfig = useCallback((path: string, value: any) => {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     debounceTimeout.current = window.setTimeout(() => {
-      setConfig((prevConfig) => {
+      setConfig((prevConfig: FitmentWidgetConfig | null) => {
         if (!prevConfig) return null;
         const pathArray = path.split('.');
         const newConfig: any = JSON.parse(JSON.stringify(prevConfig));

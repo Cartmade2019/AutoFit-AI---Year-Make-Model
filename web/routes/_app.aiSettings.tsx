@@ -22,7 +22,7 @@ import {
 } from '@shopify/polaris';
 import { MinusIcon, PlusIcon, XIcon, RefreshIcon, ViewIcon } from '@shopify/polaris-icons';
 import { getWidgetSettings, saveWidgetSettings } from '../lib/widgetSettings';
-import type { ChatBubbleWidgetConfig } from '../types/widgets';
+import type { ChatBubbleWidgetConfig } from '../types/widget';
 import ColorSwatch from '../components/ColorSwatch';
 
 // Types are imported from '../types/widgets'
@@ -180,7 +180,7 @@ const ChatBubbleWidget: React.FC = () => {
         <Page title="Chat Bubble Widget Configuration">
           <Layout>
             <Layout.Section>
-              <Card sectioned>
+              <Card>
                 <SkeletonDisplayText size="small" />
                 <div style={{ marginTop: '1rem' }}>
                   <SkeletonBodyText lines={10} />
@@ -195,7 +195,7 @@ const ChatBubbleWidget: React.FC = () => {
 
   const renderAppearanceTab = () => (
     <BlockStack gap="400">
-      <Card sectioned>
+      <Card>
         <FormLayout>
           <Text variant="headingMd" as="h3">Text Content</Text>
           <TextField
@@ -231,7 +231,7 @@ const ChatBubbleWidget: React.FC = () => {
         </FormLayout>
       </Card>
 
-      <Card sectioned>
+      <Card>
         <BlockStack gap="400">
           <Text variant="headingMd" as="h3">Colors</Text>
           <Grid>
@@ -288,7 +288,7 @@ const ChatBubbleWidget: React.FC = () => {
         </BlockStack>
       </Card>
 
-      <Card sectioned>
+      <Card>
         <FormLayout>
           <Text variant="headingMd" as="h3">Styling</Text>
           <Select
@@ -304,7 +304,7 @@ const ChatBubbleWidget: React.FC = () => {
 
   const renderOptionsTab = () => (
     <BlockStack gap="400">
-      <Card sectioned>
+      <Card>
         <FormLayout>
           <Text variant="headingMd" as="h3">Icons</Text>
           <TextField
@@ -317,7 +317,7 @@ const ChatBubbleWidget: React.FC = () => {
         </FormLayout>
       </Card>
 
-      <Card sectioned>
+      <Card>
         <BlockStack gap="300">
           <InlineStack align="space-between">
             <Text variant="headingMd" as="h3">Quick Questions</Text>
@@ -331,13 +331,14 @@ const ChatBubbleWidget: React.FC = () => {
             </Button>
           </InlineStack>
           {config.options.quick_questions.length === 0 ? (
-            <Text variant="bodySm" color="subdued">No quick questions added yet.</Text>
+            <Text as='span' variant="bodySm" tone="subdued">No quick questions added yet.</Text>
           ) : (
             <BlockStack gap="200">
               {config.options.quick_questions.map((question, index) => (
                 <InlineStack key={index} gap="200" align="center">
                   <div style={{ flexGrow: 1 }}>
                     <TextField
+                      label=""
                       value={question}
                       onChange={(value) => updateQuickQuestion(index, value)}
                       placeholder={`Quick question ${index + 1}`}
@@ -354,7 +355,7 @@ const ChatBubbleWidget: React.FC = () => {
               ))}
             </BlockStack>
           )}
-          <Text variant="bodySm" color="subdued">
+          <Text as="span" variant="bodySm" tone="subdued">
             Add up to <b>4</b> quick questions that users can click to start conversations.
           </Text>
         </BlockStack>
@@ -523,7 +524,7 @@ const ChatBubbleWidget: React.FC = () => {
 
         </div>
         <Box padding="300">
-          <Text variant="bodySm" color="subdued">
+          <Text as='span' variant="bodySm" tone="subdued">
             This is a live preview showing how the chat widget will appear on your storefront. All settings update in real-time.
           </Text>
         </Box>
