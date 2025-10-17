@@ -12,6 +12,7 @@ export function NavMenu() {
       <Link to='/settings'>Settings</Link>
       <Link to='/installation'>Installation</Link>
       <Link to='/help'>Help</Link>
+      <Link to='/analytics'>Analytics</Link>
     </AppBridgeNavMenu>
   );
 }
