@@ -222,7 +222,7 @@ export type GadgetWidgetData = {
 };
 
 
-interface GarageWidgetConfig {
+export interface GarageWidgetConfig {
   appearance: {
     show_title: boolean;
     show_icons: boolean;
