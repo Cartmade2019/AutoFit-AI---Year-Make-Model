@@ -19,8 +19,16 @@ export const onSuccess: ActionOnSuccess = async ({ params, record, logger, api, 
       return;
     }
 
+    const shop = record.shopId
+    if(!shop) return 
+    const data = await api.shopifyShop.findById(shop , {
+          select : {myshopifyDomain : true}
+    })
+
+    logger.info(data.myshopifyDomain + 'what is the value ')
+
     // Get shop domain directly from Shopify connection
-    const storeDomain = connections.shopify.currentShop?.domain;
+    const storeDomain = data.myshopifyDomain
     if (!storeDomain) {
       logger.error({
         message: "Unable to retrieve shop domain from Shopify connection",
