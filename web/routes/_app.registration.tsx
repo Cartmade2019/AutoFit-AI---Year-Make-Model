@@ -22,7 +22,7 @@ import {
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "@remix-run/react";
 import { getWidgetSettings, saveWidgetSettings } from "../lib/widgetSettings";
-import type { RegistrationWidgetConfig } from "../types/widgets";
+import type { RegistrationWidgetConfig } from "../types/widget";
 import ColorSwatch from "../components/ColorSwatch";
 import { api } from "../api";
 
@@ -118,6 +118,8 @@ useEffect(() => {
     translations: {
       no_fit_message: "We couldn't find matching parts for your vehicle.",
       submit_button_text: "Find Parts",
+      cap_exceed_message: "Sorry Your Cap Exceed",
+      rate_limit_message: "Your IP has been blocked for using our service so often."
     },
   };
 
@@ -510,15 +512,20 @@ const TranslationTab : React.FC<{ config: RegistrationWidgetConfig; updateConfig
 
   const [noFitMessage, setNoFitMessage] = useState(config.translations.no_fit_message);
   const [submitButtonText, setSubmitButtonText] = useState(config.translations.submit_button_text);
+  const [capExceedMessage , setCapExceedMessage] = useState(config.translations.cap_exceed_message)
+  const [ipAddMessage , setIpAddMessage] = useState(config.translations.rate_limit_message)
 
   useEffect(()=> {
     setNoFitMessage(config.translations.no_fit_message);
     setSubmitButtonText(config.translations.submit_button_text);
+    setCapExceedMessage(config.translations.cap_exceed_message)
+    setIpAddMessage(config.translations.rate_limit_message)
   },[config.translations])
   
   return (
   <Card>
     <FormLayout>
+      <FormLayout.Group condensed>
       <TextField
         label="No Fit Message"
         value={config.translations.no_fit_message}
@@ -528,7 +535,6 @@ const TranslationTab : React.FC<{ config: RegistrationWidgetConfig; updateConfig
           }}
         autoComplete="off"
       />
-      <FormLayout.Group condensed>
         <TextField
           label="Submit Button Text"
           value={config.translations.submit_button_text}
@@ -538,6 +544,10 @@ const TranslationTab : React.FC<{ config: RegistrationWidgetConfig; updateConfig
             }}
           autoComplete="off"
         />
+      </FormLayout.Group>
+      <FormLayout.Group condensed>
+           <TextField label="Cap Exceed Message" autoComplete="off" value={config.translations.cap_exceed_message} onChange={(value)=> {setCapExceedMessage(value) ; updateConfig('translations.cap_exceed_message' , value)}} />
+           <TextField label="IP Rate Limit Message" autoComplete="off" value={config.translations.rate_limit_message} onChange={(value)=> {setIpAddMessage(value) ; updateConfig('translations.rate_limit_message' , value)}} />           
       </FormLayout.Group>
     </FormLayout>
   </Card>

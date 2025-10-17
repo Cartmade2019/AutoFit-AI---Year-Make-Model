@@ -55,6 +55,8 @@ export interface TableOptions {
 interface WidgetOptions {
   show_icons: boolean;
   show_title: boolean;
+  countries: []
+  rate_limit: string;
 }
 
 interface WidgetColorsForRegistration {
@@ -62,9 +64,8 @@ interface WidgetColorsForRegistration {
   border_color: string;
   background_color: string;
   primary_button_color: string;
-  secondary_button_color: string;
   primary_button_text_color: string;
-  secondary_button_text_color: string;
+  input_background_color: string;
 }
 
 interface SubmitButtonForRegistration {
@@ -84,6 +85,8 @@ interface WidgetAppearance {
 interface WidgetTranslations {
   no_fit_message: string;
   submit_button_text: string;
+  cap_exceed_message: string;
+  rate_limit_message: string;
 }
 
 export interface RegistrationWidgetConfig {
@@ -187,6 +190,7 @@ export interface VerifyWidgetOptions {
   collapse_form_open_by_default: boolean;
   first_view: number;
   display_all_fitment_fields: boolean;
+  verify_fitment_widget_icon_url: string;
 }
 
 export interface VerifyTranslations {
@@ -218,7 +222,7 @@ export type GadgetWidgetData = {
 };
 
 
-interface GarageWidgetConfig {
+export interface GarageWidgetConfig {
   appearance: {
     show_title: boolean;
     show_icons: boolean;

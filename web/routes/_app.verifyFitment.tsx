@@ -20,7 +20,7 @@ import {
   SkeletonDisplayText,
 } from '@shopify/polaris';
 import { getWidgetSettings, saveWidgetSettings } from '../lib/widgetSettings';
-import type { VerifyFitmentWidgetConfig } from '../types/widgets';
+import type { VerifyFitmentWidgetConfig } from '../types/widget';
 import ColorSwatch from '../components/ColorSwatch';
 
 // getWidgetSettings/saveWidgetSettings moved to '../lib/widgetSettings'
@@ -45,6 +45,7 @@ const VerifyFitmentWidget: React.FC = () => {
       collapse_form_open_by_default: true,
       first_view: 3,
       display_all_fitment_fields: true,
+      verify_fitment_widget_icon_url : "https://cdn.shopify.com/s/files/1/0973/2433/5398/files/circle-question-solid_fitment.svg?v=1760601596"
     },
     appearance: {
       title: 'Verify Your Vehicle Fitment',
@@ -184,6 +185,29 @@ const VerifyFitmentWidget: React.FC = () => {
     );
   }
 
+
+
+  const ICONS = [
+    "https://cdn.shopify.com/s/files/1/0973/2433/5398/files/circle-question-solid_fitment.svg?v=1760601596",
+    "https://files.svgcdn.io/streamline-ultimate-color/car-4.svg",
+    "https://files.svgcdn.io/streamline-kameleon-color/motorbike.svg",
+  ];
+
+  const iconBox = (selected: boolean): React.CSSProperties => ({
+    border: selected ? "2px solid #0B5FFF" : "2px solid transparent",
+    borderRadius: 8,
+    padding: 6,
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 48,
+    height: 48,
+    background: "#fff",
+  });
+
+
+
   const renderAppearanceTab = () => (
     <BlockStack gap="300">
       <Card>
@@ -218,6 +242,36 @@ const VerifyFitmentWidget: React.FC = () => {
 
   const renderOptionsTab = () => (
     <BlockStack gap="300">
+      <Card>
+         <FormLayout>
+              <Text variant="headingMd" as="h3">
+                  Icons
+              </Text>
+
+    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      {ICONS.map((url) => {
+        const selected =
+          config.options.verify_fitment_widget_icon_url === url;
+
+        return (
+          <button
+            key={url}
+            type="button"
+            aria-label="choose icon"
+            onClick={() =>
+              updateConfig("options.verify_fitment_widget_icon_url", url)
+            }
+            style={iconBox(selected)}
+          >
+            <img src={url} width={36} height={36} alt="Icon" />
+          </button>
+        );
+      })}
+    </div>
+  </FormLayout>
+</Card>
+
+
       <Card>
         <FormLayout>
           <Text variant="headingMd" as="h3">Behavior</Text>
@@ -337,6 +391,10 @@ const VerifyFitmentWidget: React.FC = () => {
               margin: '0 auto'
             }}>
               <BlockStack gap="200">
+               <InlineStack gap="600">
+                <img key={config.options.verify_fitment_widget_icon_url} src={config.options.verify_fitment_widget_icon_url} alt='Verify Fitment Widget' style={{ width: '32px' , height: '32px'}} />
+                 
+               <div>
                 {config.appearance.show_title && (
                   <h2 style={{
                     color: config.appearance.colors.text_color,
@@ -359,6 +417,8 @@ const VerifyFitmentWidget: React.FC = () => {
                     {config.appearance.subtitle}
                   </p>
                 )}
+                </div>  
+               </InlineStack>
 
                 {config.options.collapse_form ? (
                   <div>
@@ -440,7 +500,7 @@ const VerifyFitmentWidget: React.FC = () => {
             </div>
           </div>
           <Box padding="300">
-            <Text variant="bodySm" color="subdued">
+            <Text as='span' variant="bodySm" tone="subdued">
               This is only a preview of settings. The data shown here is dummy. The actual widget preview on the storefront may differ based on real data.
             </Text>
           </Box>

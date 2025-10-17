@@ -193,6 +193,22 @@ const ChatBubbleWidget: React.FC = () => {
     );
   }
 
+  const ICONS = ["https://files.svgcdn.io/streamline-color/ai-generate-variation-spark.svg","https://files.svgcdn.io/streamline-flex-color/ai-chip-robot.svg", "https://files.svgcdn.io/streamline-plump-color/ai-generate-portrait-image-spark-flat.svg"]
+
+  const iconBox = (selected: boolean) : React.CSSProperties => ({
+    border: selected ? "2px solid #0B5FFF" : "2px solid transparent",
+    borderRadius: 8,
+    padding: 6,
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 48,
+    height: 48,
+    background: "#fff",
+  })
+
+
   const renderAppearanceTab = () => (
     <BlockStack gap="400">
       <Card>
@@ -307,13 +323,26 @@ const ChatBubbleWidget: React.FC = () => {
       <Card>
         <FormLayout>
           <Text variant="headingMd" as="h3">Icons</Text>
-          <TextField
-            label="Chat Bubble Icon URL"
-            value={config.options.chat_bubble_icon_url}
-            onChange={(value) => updateConfig('options.chat_bubble_icon_url', value)}
-            autoComplete="off"
-            helpText="Icon displayed on the chat bubble button."
-          />
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      {ICONS.map((url) => {
+        const selected =
+          config.options.chat_bubble_icon_url === url;
+
+        return (
+          <button
+            key={url}
+            type="button"
+            aria-label="choose icon"
+            onClick={() =>
+              updateConfig("options.chat_bubble_icon_url", url)
+            }
+            style={iconBox(selected)}
+          >
+            <img src={url} width={36} height={36} alt="Icon" />
+          </button>
+        );
+      })}
+    </div>
         </FormLayout>
       </Card>
 
